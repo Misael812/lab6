@@ -41,7 +41,7 @@ void nuthing(){
 }
 
 void supervisor(){
-    printk("\nsupervisor start\n");
+    //printk("\nsupervisor start\n");
     //create semaphore to be shared
     struct k_sem my_sem;
     k_sem_init(&my_sem, 1, 1);
@@ -50,6 +50,9 @@ void supervisor(){
     k_tid_t worker1_tid = create_thread(&worker1, worker1_stack, (k_thread_entry_t)thingsToDo, &my_sem, name1, NULL, THING1_PRIORITY, 0, K_MSEC(20));
     k_tid_t worker2_tid = create_thread(&worker2, worker2_stack, (k_thread_entry_t)thingsToDo, &my_sem, name2, NULL, THING2_PRIORITY, 0, K_NO_WAIT);
     k_sleep(K_MSEC(500));
+
+    // Just to get rid of unused variable warning
+    printk("Ignore this line %d \n", worker1_tid->errno_var + worker2_tid->errno_var);
 }
 
 void test_activity0(){
